@@ -8,9 +8,9 @@ We explore two types of forecast stability, vertical stability and horizontal st
 # Instructions for Execution
 
 ## Executing the Base Models
-For the experiments, three base models are used: N-BEATS, Pooled Regression (PR) and LightGBM. All three base models are executed as global forecasting models where a single forecasting model is built across all series in a dataset. 
+For the experiments, five base models are used: N-BEATS, Pooled Regression (PR), LightGBM, Exponential Smoothing (ETS) and Autoregressive Integrated Moving Average (ARIMA). The first three models are executed as global forecasting models where a single forecasting model is built across all series in a dataset whereas ETS and ARIMA are executed as local forecasting models. 
 
-The PR and LightGBM models can be executed using the "do_global_forecasting" function implemented in ./experiments/other_model_experiments.R script.
+All base models except N-BEATS can be executed using the functions, "do_forecasting" (for vertical stability) and "do_stl_forecasting" (for horizontal stability) implemented in ./experiments/other_model_experiments.R script.
 The function parameters are explained in detail in the script. 
 The forecasts, accuracy metrics, stability metrics and execution times of the models will be stored in "./results/forecasts", "./results/errors", "./results/errors/stability" and "./results/execution_times" folders, respectively. 
 See the examples provided in ./experiments/other_model_experiments.R script under the heading "Running base models" for more details.
@@ -23,8 +23,8 @@ The stable N-BEATS model is executed as a benchmark by setting lambda to the cor
 ## Executing the Interpolation Experiments
 After obtaining the base model forecasts, you can directly execute the interpolation experiments using the functions implemented in 
 ./utils/interpolate.R script.
-Each function takes three parameters: path (file path of the base model forecasts), file_name (output file name) and w_s (a vector of numerical values to be used as w_s during interpolation).
-The interpolation experiments of PR and LightGBM models are written in ./experiments/other_model_experiments.R.
+Each function takes seven parameters: path (file path of the base model forecasts), file_name (output file name), w_s (a vector of numerical values to be used as w_s during interpolation), input_file_name (file name of the dataset), forecast_horizon (number of required forecasts for each origin), num_origins (number of origins) and seasonality (for MASE and RMSSE calculations).
+The interpolation experiments of PR, LightGBM, ETS and ARIMA models are written in ./experiments/other_model_experiments.R.
 The interpolation experiments of N-BEATS model are written in ./experiments/nbeats_experiments.R.
 The forecasts, accuracy metrics and stability metrics of the framework will be stored in "./results/forecasts", "./results/errors" and "./results/errors/stability" folders, respectively. 
 
